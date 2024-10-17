@@ -16,14 +16,19 @@ def generate_stream():
     """
     ffmpeg_command = [
         'ffmpeg',
-        '-i', VIDEO_FILE_PATH,       # Input file
-        '-f', 'mp4',                 # Format: MP4
-        '-movflags', 'frag_keyframe+empty_moov',  # Fragmented MP4 for streaming
-        '-c:v', 'libx264', 
-        '-preset', 'fast',          # Video codec
-        '-c:a', 'aac',               # Audio codec
-        '-f', 'mpegts',              # MPEG transport stream (for chunked output)
-        'pipe:1'                     # Output to pipe
+        '-i', VIDEO_FILE_PATH,                       # Input video file
+        '-c:v', 'libx264',                      # H.264 video codec
+        '-profile:v', 'high',                   # High profile for H.264
+        '-preset', 'fast',                      # Fast preset for quicker compression
+        '-b:v', '4500k',                        # Set video bitrate (4500 kbps as a median)
+        '-maxrate', '5000k',                    # Max bitrate (5000 kbps)
+        '-bufsize', '10000k',                   # Buffer size (for better bitrate control)
+        '-vf', 'scale=-2:1080',                 # Rescale to a maximum height of 1080p (if necessary)
+        '-r', '30',                             # Set frame rate to 30 FPS (common for Instagram)
+        '-c:a', 'aac',                          # AAC audio codec
+        '-b:a', '128k',                         # Audio bitrate at 128 kbps
+        '-movflags', 'faststart',               # Enable MP4 streaming
+        '-y',                         # Output to pipe
     ]
 
     process = subprocess.Popen(ffmpeg_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
