@@ -19,7 +19,8 @@ def generate_stream():
         '-i', VIDEO_FILE_PATH,       # Input file
         '-f', 'mp4',                 # Format: MP4
         '-movflags', 'frag_keyframe+empty_moov',  # Fragmented MP4 for streaming
-        '-c:v', 'libx264',           # Video codec
+        '-c:v', 'libx264', 
+        '-preset', 'fast',          # Video codec
         '-c:a', 'aac',               # Audio codec
         '-f', 'mpegts',              # MPEG transport stream (for chunked output)
         'pipe:1'                     # Output to pipe
