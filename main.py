@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 # Path to your video file
 VIDEO_FILE_PATH = '1.mp4'
+ALLOWED_HOSTS = ['ffmpeg.funkybugsinfo.co.in']
 
 
 def generate_stream():
