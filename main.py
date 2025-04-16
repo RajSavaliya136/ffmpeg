@@ -143,7 +143,7 @@ def stream():
 
 
 @app.route('/igatpuri')
-def stream():
+def stream_2():
     """
     Stream the video content to the client.
     """
